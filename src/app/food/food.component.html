@@ -1,0 +1,94 @@
+<div class="content-fix">
+
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"  style="margin-right: 5px !important;" (click)="openNew()"></button>
+      </ng-template>
+
+  </p-toolbar>
+    <p-table #dt [value]="FoodList" [rows]="10" [paginator]="true" [globalFilterFields]="['id','foodName','foodTypeName','calorie']" >
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Besin No <p-sortIcon field="id"></p-sortIcon></th>
+              <th>Besin Adı <p-sortIcon field="foodName"></p-sortIcon></th>
+              <th>Besin Tipi  <p-sortIcon field="foodTypeName"></p-sortIcon></th>
+              <th>Kalori  <p-sortIcon field="calorie"></p-sortIcon></th>
+              <th>İşlemler</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-food>
+          <tr>
+              <td pSortableColumn="id">{{food.id}}</td>
+              <td pSortableColumn="foodName">{{food.foodName}}</td>
+              <td pSortableColumn="foodTypeName">{{food.foodTypeName}}</td>
+              <td pSortableColumn="calorie">{{food.calorie}}</td>
+              <td>
+               <button pButton pRipple icon="pi pi-pencil" class="p-button-success p-mr-2  p-button-size" style="margin-right: 5px !important" (click)="editFood(food)"></button>
+               <button pButton pRipple icon="pi pi-trash" class= "p-button-danger  p-button-size "  (click)="deleteFood(food)"></button>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+  
+  
+  
+  
+  <p-dialog [(visible)]="CreateFoodDialog" [style]="{width: '450px'}"  [contentStyle]="{'height': '250px'}" header="Yeni Besin" [modal]="true" styleClass="p-fluid" [resizable]=false>
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="name">Besin Tipi</label>
+            <p-dropdown [options]="FoodTypes" [(ngModel)]="Food.selectedFoodType" optionLabel="foodTypeName" required 	[showClear]="true"></p-dropdown>
+
+        </div>
+        <div class="p-field">
+            <label for="name">Besin Adı</label>
+            <input type="text" pInputText id="name" [(ngModel)]="Food.foodName" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !Food.foodName">Bu alan gereklidir !</small>
+        </div>
+        <div class="p-field">
+            <label for="name">Kalori</label>
+            <input type="number" pInputText id="calorie" [(ngModel)]="Food.calorie" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !Food.calorie">Bu alan gereklidir !</small>
+        </div>
+
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveFood()"></button>
+    </ng-template>
+  </p-dialog>
+  
+  <p-dialog [(visible)]="UpdateFoodDialog" [style]="{width: '450px'}"  [contentStyle]="{'height': '250px'}" header="Besin Düzenle" [modal]="true" styleClass="p-fluid" [resizable]=false>
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="name">Besin Tipi</label>
+            <p-dropdown [options]="FoodTypes" [(ngModel)]="UpdateFood.selectedFoodType" optionLabel="foodTypeName" required  [placeholder]="UpdateFood.foodTypeName"	[showClear]="true"></p-dropdown>
+
+        </div>
+        <div class="p-field">
+            <label for="name">Besin Adı</label>
+            <input type="text" pInputText id="name" [(ngModel)]="UpdateFood.foodName" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !Client.clientName">Bu alan gereklidir !</small>
+        </div>
+        <div class="p-field">
+            <label for="name">Kalori</label>
+            <input type="number" pInputText id="calorie" [(ngModel)]="UpdateFood.calorie" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !Client.clientName">Bu alan gereklidir !</small>
+        </div>
+
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="putFood()"></button>
+    </ng-template>
+  </p-dialog>
+  
+  
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  <p-toast position="bottom-right"></p-toast>
+  </div>
+  
+  
+  

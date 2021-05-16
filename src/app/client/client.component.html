@@ -1,0 +1,87 @@
+<div class="content-fix">
+
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"  style="margin-right: 5px !important;" (click)="openNew()"></button>
+    </ng-template>
+</p-toolbar>
+  <p-table [value]="ClientList" [rows]="10" [paginator]="true" >
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Danışan No</th>
+            <th>Danışan Adı</th>
+            <th>İşlemler</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-client>
+        <tr>
+            <td>{{client.clientId}}</td>
+            <td>{{client.clientName}}</td>
+            <td>
+             <button pButton pRipple icon="pi pi-pencil" class=" p-button-success p-mr-2  p-button-size button-margin-fix" (click)="editClient(client)"></button>
+             <button pButton pRipple icon="fa fa-plus" class=" p-button-primary p-button-size button-margin-fix"  (click)="createList(client)"></button>
+             <button pButton pRipple icon="pi pi-trash" class=" p-button-danger p-button-size button-margin-fix"          (click)="deleteClient(client)"></button>
+          
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+
+
+<p-dialog [(visible)]="CreateClientDialog" [style]="{width: '450px'}" header="Yeni Danışan" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+      <div class="p-field">
+          <label for="name">Ad Soyad</label>
+          <input type="text" pInputText id="name" [(ngModel)]="Client.clientName" required autofocus />
+          <small class="p-invalid" *ngIf="submitted && !Client.clientName">Bu alan gereklidir !</small>
+      </div>
+  </ng-template>
+  
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveClient()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="UpdateClientDialog" [style]="{width: '450px'}" header="Danışan Güncelleme" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+      <div class="p-field">
+          <label for="name">Ad Soyad</label>
+          <input type="text" pInputText id="name" [(ngModel)]="UpdateClient.clientName" required autofocus />
+          <small class="p-invalid" *ngIf="submitted && !UpdateClient.clientName">Bu alan gereklidir !</small>
+      </div>
+  </ng-template>
+  
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="putClient()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="CreateDietDialog" [style]="{width: '450px'}" [contentStyle]="{'height': '200px'}" header="Diet Oluştur" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="thatDay">Öğün</label>
+            <input type="number" pInputText id="thatDay" [(ngModel)]="Diet.thatDay" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !Diet.thatDay">Bu alan gereklidir !</small>
+        </div>
+        <div class="p-field">
+            <label for="snacks">Ara Öğün</label>
+            <input type="number" pInputText id="snacks" [(ngModel)]="Diet.snacks" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !Diet.snacks">Bu alan gereklidir !</small>
+        </div>
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="addDietList()"></button>
+    </ng-template>
+  </p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-toast position="bottom-right"></p-toast>
+</div>
+
+
